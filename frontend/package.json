@@ -1,0 +1,12 @@
+{
+  "name": "eslint-config-local-style",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": "./eslint.config.mjs",
+  "dependencies": {
+    "@stylistic/eslint-plugin": "^5.10.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=9"
+  }
+}

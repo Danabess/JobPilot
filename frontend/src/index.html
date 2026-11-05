@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <title>JobPilot · Your job search, in one place</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/updates.css">
+  <link rel="stylesheet" href="styles/preferences.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+  <script src="scripts/app.js" defer></script>
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="#overview"><span class="brand-mark"><svg viewBox="0 0 24 24">
+            <path d="M5 17.5 10.2 6l3.1 7 2-4 3.7 8.5M4 19h16" />
+          </svg></span><span>jobpilot<span class="brand-dot">.</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link" href="#overview" data-route="overview"><span class="nav-icon">▦</span>Overview</a>
+        <a class="nav-link" href="#applications" data-route="applications"><span class="nav-icon">▣</span>Applications<span class="nav-count">12</span></a>
+        <a class="nav-link" href="#interviews" data-route="interviews"><span class="nav-icon">▦</span>Interviews<span class="nav-count">3</span></a>
+        <a class="nav-link" href="#search" data-route="search"><span class="nav-icon">⌕</span>Job search</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="upgrade-card">
+          <div class="upgrade-spark">✦</div><strong>Make your next move</strong>
+          <p>Get a little help with every step of your search.</p><a href="#applications">Explore your pipeline <span>→</span></a>
+        </div><button class="nav-link settings-link" type="button" data-open-settings><span class="nav-icon">⚙</span>Settings</button>
+        <div class="profile">
+          <button class="avatar avatar-user account-trigger" type="button" aria-label="Open account" data-open-account>JD</button>
+          <div class="profile-copy"><strong>Jordan Davis</strong><span>Personal workspace</span></div><button class="icon-button profile-menu" aria-label="Account options">···</button>
+          <div class="account-menu" id="accountMenu" role="menu" aria-label="Account options" hidden></div>
+        </div>
+      </div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong data-page-title>Overview</strong></div>
+        <div class="top-actions"><button class="icon-button notification" aria-label="Notifications"><svg viewBox="0 0 24 24">
+              <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-8 13h4" />
+            </svg><i></i></button>
+        </div>
+      </header>
+      <div id="view-root" aria-live="polite"></div>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="recentAccountsModal" aria-hidden="true">
+    <section class="modal recent-accounts-modal" role="dialog" aria-modal="true" aria-labelledby="recentAccountsTitle">
+      <div class="modal-heading">
+        <div><span class="modal-kicker">SWITCH PROFILE</span>
+          <h2 id="recentAccountsTitle">Recent accounts</h2>
+        </div><button class="icon-button recent-accounts-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="recent-account-list" id="recentAccountList"></div>
+      <div class="modal-actions"><button type="button" class="button button-secondary recent-accounts-close">Cancel</button></div>
+    </section>
+  </div>
+  <div class="modal-backdrop" id="accountModal" aria-hidden="true">
+    <section class="modal account-modal" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+      <div class="modal-heading">
+        <div><span class="modal-kicker">YOUR JOBPILOT ACCOUNT</span>
+          <h2 id="accountTitle">Welcome back</h2>
+        </div><button class="icon-button account-modal-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="auth-tabs" role="tablist" aria-label="Account action"><button type="button" class="auth-tab is-active" data-auth-mode="login" role="tab" aria-selected="true">Log in</button><button type="button" class="auth-tab" data-auth-mode="register" role="tab" aria-selected="false">Create account</button></div>
+      <form id="accountForm"><label data-name-field hidden>Your name<input name="name" autocomplete="name" placeholder="Jordan Davis"></label><label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters" required></label>
+        <p class="auth-message" aria-live="polite">This account form is a local interface preview.</p>
+        <div class="modal-actions"><button type="submit" class="button button-primary" data-auth-submit>Log in <span>→</span></button></div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" id="settingsModal" aria-hidden="true">
+    <section class="modal settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-heading">
+        <div><span class="modal-kicker">PERSONALIZE YOUR WORKSPACE</span>
+          <h2 id="settingsTitle">Settings</h2>
+        </div><button class="icon-button settings-modal-close" type="button" aria-label="Close">×</button>
+      </div>
+      <form id="settingsForm"><label>Theme<select name="theme" id="themeSelect">
+            <option value="system">Sync with system</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select></label>
+        <p class="setting-help">System sync follows your device’s light or dark appearance.</p><label>Interface scale<select name="scale" id="scaleSelect">
+            <option value="0.9">Compact · 90%</option>
+            <option value="1">Default · 100%</option>
+            <option value="1.1">Comfortable · 110%</option>
+          </select></label>
+        <p class="setting-help">Adjust the size of the workspace and its controls.</p>
+        <div class="modal-actions"><button type="button" class="button button-secondary settings-modal-close">Done</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" id="applicationModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-heading">
+        <div><span class="modal-kicker">YOUR NEXT OPPORTUNITY</span>
+          <h2 id="modalTitle">Add an application</h2>
+        </div><button class="icon-button modal-close" aria-label="Close">×</button>
+      </div>
+      <form id="applicationForm"><label>Company name<input name="company" placeholder="e.g. Linear" required></label><label>Job title<input name="role" placeholder="e.g. Product Designer" required></label>
+        <div class="form-row"><label>Application status<select name="status">
+              <option>Saved</option>
+              <option>Applied</option>
+              <option>Interviewing</option>
+              <option>Offer</option>
+            </select></label><label>Date applied<input name="date" type="date" autocomplete="off"></label></div>
+        <div class="modal-actions"><button type="button" class="button button-secondary modal-cancel">Cancel</button><button type="submit" class="button button-primary">Add to pipeline <span>→</span></button></div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" id="interviewModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="interviewModalTitle">
+      <div class="modal-heading">
+        <div><span class="modal-kicker">MAKE TIME FOR WHAT'S NEXT</span>
+          <h2 id="interviewModalTitle">Add an interview</h2>
+        </div><button class="icon-button interview-modal-close" aria-label="Close">×</button>
+      </div>
+      <form id="interviewForm"><label>Company<input name="company" placeholder="e.g. Linear" required></label><label>Role<input name="role" placeholder="e.g. Product Designer" required></label>
+        <div class="form-row"><label>Interview date<input name="date" type="date" data-interview-date required></label><label>Time<input name="time" type="time" value="10:00" required></label></div>
+        <div class="form-row"><label>Interview type<input name="type" placeholder="e.g. First round" required></label><label>Status<select name="status">
+              <option>Scheduled</option>
+              <option>Needs reschedule</option>
+            </select></label></div>
+        <div class="modal-actions"><button type="button" class="button button-secondary interview-modal-close">Cancel</button><button type="submit" class="button button-primary">Add interview <span>→</span></button></div>
+      </form>
+    </section>
+  </div>
+</body>
+
+</html>
